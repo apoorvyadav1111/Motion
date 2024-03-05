@@ -15,8 +15,10 @@ import { DocumentList } from "./document-list";
 import { TrashBox } from "./trash-box";
 
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { useSearch } from "@/hooks/use-search";
 
 export const Navigation = () => {
+    const search = useSearch();
     const pathName = usePathname();
     let isMobile = useMediaQuery("(max-width: 768px)");
     const isResizingRef = useRef(false);
@@ -131,7 +133,7 @@ export const Navigation = () => {
                 </div>
                 <div>
                     <UserItem />
-                    <Item onClick={()=>{}} label="Search" icon={Search} isSearch/>
+                    <Item onClick={search.onOpen} label="Search" icon={Search} isSearch/>
                     <Item onClick={()=>{}} label="Settings" icon={Settings}/>
                     <Item onClick={handleCreate} label="New Page" icon={PlusCircle}/>
 
