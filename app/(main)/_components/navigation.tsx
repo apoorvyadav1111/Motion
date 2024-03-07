@@ -1,11 +1,12 @@
 "use client";
 
 import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { ElementRef, useRef, useState, useEffect } from "react";
 import {useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
 
+import Navbar from "./navbar";
 import { cn } from "@/lib/utils";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -16,10 +17,13 @@ import { TrashBox } from "./trash-box";
 
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
 
 export const Navigation = () => {
     const search = useSearch();
+    const settings = useSettings();
     const pathName = usePathname();
+    const params = useParams();
     let isMobile = useMediaQuery("(max-width: 768px)");
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -134,7 +138,7 @@ export const Navigation = () => {
                 <div>
                     <UserItem />
                     <Item onClick={search.onOpen} label="Search" icon={Search} isSearch/>
-                    <Item onClick={()=>{}} label="Settings" icon={Settings}/>
+                    <Item onClick={settings.onOpen} label="Settings" icon={Settings}/>
                     <Item onClick={handleCreate} label="New Page" icon={PlusCircle}/>
 
                 </div>
@@ -147,7 +151,7 @@ export const Navigation = () => {
                         />
                     <Popover>
                         <PopoverTrigger className="w-full mt-4">
-                            <Item label="trash" icon={Trash} />
+                            <Item label="Trash" icon={Trash} />
                         </PopoverTrigger>
                         <PopoverContent
                             className="p-0 w-72"
@@ -169,10 +173,17 @@ export const Navigation = () => {
                     isMobile && "left-0 w-full"
                 )}
             >
-                
+                {
+                    !!params.documentId ? (
+                        <Navbar
+                            isCollapsed={isCollapsed}
+                            onResetWidth={resetWidth}
+                        />
+                    ) : (
                 <nav className="bg-transparent px-3 py-2 w-full">
                 {isCollapsed && <MenuIcon onClick={resetWidth} role="button" className="h-6 w-6 text-muted-foreground" />}
-            </nav>
+                </nav>
+                )}
             </div>
         </>
     )
