@@ -23,7 +23,6 @@ export const TrashBox = () => {
         return document.title.toLowerCase().includes(search.toLowerCase())
     });
 
-    console.log(documents);
 
     const onClick = (documentId: string) => {
         router.push(`/documents/${documentId}`);
@@ -46,6 +45,7 @@ export const TrashBox = () => {
         documentId: Id<"documents">
     ) => {
         const promise = remove({id: documentId});
+
         toast.promise(promise,{
             success:'Note deleted',
             loading:'Deleting note...',
