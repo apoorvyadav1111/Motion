@@ -9,6 +9,7 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import TextareaAutosize from "react-textarea-autosize";
 import { useCoverImage } from "@/hooks/use-cover-image";
+import { ElementRef } from "react";
 
 interface ToolbarProps{
     initialData: Doc<"documents">;

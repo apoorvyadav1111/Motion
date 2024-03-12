@@ -13,6 +13,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
+import { Id } from "@/convex/_generated/dataModel";
 
 
 export const CoverImageModal = () => {

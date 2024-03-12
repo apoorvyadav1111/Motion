@@ -9,6 +9,7 @@ import { Spinner } from "@/components/spinner";
 import { Search, Trash, Undo } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
+import { Id } from "@/convex/_generated/dataModel";
 
 export const TrashBox = () => {
     const router = useRouter();
