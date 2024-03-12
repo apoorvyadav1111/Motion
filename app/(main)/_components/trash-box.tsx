@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEdgeStore } from "@/lib/edgestore";
+import { PartialBlock } from "@blocknote/core";
 
 export const TrashBox = () => {
     const router = useRouter();
@@ -46,13 +47,23 @@ export const TrashBox = () => {
 
     const onRemove = async (
         documentId: Id<"documents">,
-        url?: string
+        url?: string,
+        content?:string
     ) => {
         const promise = remove({id: documentId});
 
         if(url){
             await edgestore.publicFiles.delete({url:url});
         }
+
+        const contentJson: PartialBlock[] = JSON.parse(content || "") as PartialBlock[];
+
+        contentJson.map(async (block: PartialBlock)=>{
+            if(block.type === "image" && block.props!==undefined && block.props.url !== undefined){
+                await edgestore.publicFiles.delete({url:block.props.url});
+            }
+        })
+
         toast.promise(promise,{
             success:'Note deleted',
             loading:'Deleting note...',
@@ -107,7 +118,7 @@ export const TrashBox = () => {
                                     >   
                                         <Undo className="h-4 w-4" />
                                     </div>
-                                    <ConfirmModal onConfirm={()=> onRemove(document._id, document.coverImage)} >
+                                    <ConfirmModal onConfirm={()=> onRemove(document._id, document.coverImage, document.content)} >
                                     <div
                                         role="button"
                                         className="rounded-sm p-2 hover:bg-neutral-200  dark:hover:bg-neutral-600"

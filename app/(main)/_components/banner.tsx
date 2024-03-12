@@ -8,6 +8,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 import { useMutation, useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { PartialBlock } from "@blocknote/core";
 
 interface BannerProps{
     documentId: Id<"documents">;
@@ -29,6 +30,16 @@ export const Banner = ({documentId}:BannerProps) => {
             await edgestore.publicFiles.delete({
                 url: url
               });
+        }
+        const content = document?.content;
+        if(content){
+            const contentJson: PartialBlock[] = JSON.parse(content || "") as PartialBlock[];
+
+            contentJson.map(async (block: PartialBlock)=>{
+                if(block.type === "image" && block.props!==undefined && block.props.url !== undefined){
+                    await edgestore.publicFiles.delete({url:block.props.url});
+                }
+            })
         }
 
         toast.promise(promise, {
