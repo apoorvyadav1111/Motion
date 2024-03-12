@@ -4,7 +4,8 @@ import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useMutation } from "convex/react";
+import { useEdgeStore } from "@/lib/edgestore";
+import { useMutation, useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -16,9 +17,20 @@ export const Banner = ({documentId}:BannerProps) => {
     const router = useRouter();
     const remove = useMutation(api.documents.remove);
     const restore = useMutation(api.documents.restore);
+    const document = useQuery(api.documents.getById, {
+        documentId: documentId
+    });
+    const {edgestore} = useEdgeStore();
 
-    const onRemove = () =>{
+    const onRemove = async () =>{
         const promise = remove({id: documentId});
+        const url = document?.coverImage;
+        if(url){
+            await edgestore.publicFiles.delete({
+                url: url
+              });
+        }
+
         toast.promise(promise, {
             success: "Note Deleted",
             loading:"Deleting Note...",
