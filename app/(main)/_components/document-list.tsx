@@ -7,11 +7,12 @@ import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { cn } from "@/lib/utils";
 import { FileIcon } from "lucide-react";
+import { Id, Doc } from "@/convex/_generated/dataModel";
 
 interface DocumentListProps{
     parentDocumentId?: Id<"documents">;
     level?:number;
-    data?:Doc<"document">[];
+    data?:Doc<"documents">[];
 }
 export const DocumentList = ({
     parentDocumentId,
