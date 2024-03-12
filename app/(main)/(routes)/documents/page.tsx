@@ -44,7 +44,7 @@ const DocumentsPage = ()=>{
                 className="hidden dark:block"
             />
             <h2 className="text-l font-medium">
-                Welcome to {user?.firstName}&apos;s Motion
+                Welcome to {user?.firstName}&apos;s Jotion
             </h2>
             <Button onClick={onCreate}>
                 <PlusCircle className="h-4 2-4 mr-2" /> Create a note

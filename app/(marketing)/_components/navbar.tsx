@@ -30,7 +30,7 @@ export const Navbar = () => {
                         </SignInButton>
                         <SignInButton mode="modal">
                             <Button size="sm">
-                                Get Motion for Free
+                                Get Jotion for Free
                             </Button>
                         </SignInButton>
                         </>
@@ -41,7 +41,7 @@ export const Navbar = () => {
                         <>
                             <Button variant="ghost" size="sm" asChild>
                                 <Link href="/documents">
-                                    Enter Motion
+                                    Enter Jotion
                                 </Link>
                             </Button>
                             <UserButton 

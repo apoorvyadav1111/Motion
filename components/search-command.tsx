@@ -57,7 +57,7 @@ export const SearchCommand = () => {
     return (
         <CommandDialog open={isOpen} onOpenChange={onClose}>
             <CommandInput 
-                placeholder={`Search ${user?.fullName}'s Motion...`}
+                placeholder={`Search ${user?.fullName}'s Jotion...`}
             />
             <CommandList>
                 <CommandEmpty>No results found</CommandEmpty>

@@ -28,7 +28,7 @@ export const Logo = () => {
                 className="dark:block"
                 />
             <p className={cn("font-semibold", font.className)}>
-                Motion
+                Jotion
             </p>
         </div>
     );
